@@ -1,11 +1,12 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Navigate, useLocation } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { useAuth } from '@/contexts/AuthContext';
 import AuthPage from '@/pages/AuthPage';
 
 export const MainLayout: React.FC = () => {
   const { user, isLoading } = useAuth();
+  const location = useLocation();
 
   if (isLoading) {
     return (
@@ -22,6 +23,17 @@ export const MainLayout: React.FC = () => {
 
   if (!user) {
     return <AuthPage />;
+  }
+
+  // Auto-redirect to appropriate dashboard based on user role
+  if (location.pathname === '/') {
+    if (user.role === 'patient') {
+      return <Navigate to="/patient-dashboard" replace />;
+    } else if (user.role === 'doctor') {
+      return <Navigate to="/doctor-dashboard" replace />;
+    } else if (user.role === 'admin') {
+      return <Navigate to="/dashboard" replace />;
+    }
   }
 
   return (

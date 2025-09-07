@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Dashboard } from "@/pages/Dashboard";
+import { PatientDashboard } from "@/pages/PatientDashboard";
+import { DoctorDashboard } from "@/pages/DoctorDashboard";
 import { ChatWidget } from "@/components/chatbot/ChatWidget";
 import NotFound from "./pages/NotFound";
 
@@ -22,14 +24,16 @@ const App = () => (
             <Route path="/" element={<MainLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="dashboard" element={<Dashboard />} />
+              <Route path="patient-dashboard" element={<PatientDashboard />} />
+              <Route path="doctor-dashboard" element={<DoctorDashboard />} />
               <Route path="patients" element={<Dashboard />} />
               <Route path="doctors" element={<Dashboard />} />
               <Route path="appointments" element={<Dashboard />} />
-              <Route path="my-appointments" element={<Dashboard />} />
-              <Route path="my-patients" element={<Dashboard />} />
+              <Route path="my-appointments" element={<PatientDashboard />} />
+              <Route path="my-patients" element={<DoctorDashboard />} />
               <Route path="visits" element={<Dashboard />} />
               <Route path="records" element={<Dashboard />} />
-              <Route path="my-records" element={<Dashboard />} />
+              <Route path="my-records" element={<PatientDashboard />} />
               <Route path="chatbot" element={<Dashboard />} />
               <Route path="notifications" element={<Dashboard />} />
               <Route path="settings" element={<Dashboard />} />
