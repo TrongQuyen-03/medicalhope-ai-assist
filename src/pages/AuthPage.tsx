@@ -1,11 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { RegisterForm } from '@/components/auth/RegisterForm';
 import heroImage from '@/assets/hero-medical.jpg';
 import logo from '@/assets/medical-hope-logo.png';
 
 export const AuthPage: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const { user } = useAuth();
+  const [searchParams] = useSearchParams();
+  const [isLogin, setIsLogin] = useState(searchParams.get('mode') !== 'register');
+
+  // Update mode when URL params change
+  useEffect(() => {
+    setIsLogin(searchParams.get('mode') !== 'register');
+  }, [searchParams]);
+
+  if (user) {
+    // Redirect authenticated users based on role
+    if (user.role === 'patient') {
+      return <Navigate to="/app/patient-dashboard" replace />;
+    } else if (user.role === 'doctor') {
+      return <Navigate to="/app/doctor-dashboard" replace />;
+    } else if (user.role === 'admin') {
+      return <Navigate to="/app/dashboard" replace />;
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-hero flex">

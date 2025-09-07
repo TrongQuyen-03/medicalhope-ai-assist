@@ -22,17 +22,17 @@ export const MainLayout: React.FC = () => {
   }
 
   if (!user) {
-    return <AuthPage />;
+    return <Navigate to="/auth" replace />;
   }
 
   // Auto-redirect to appropriate dashboard based on user role
-  if (location.pathname === '/') {
+  if (location.pathname === '/app') {
     if (user.role === 'patient') {
-      return <Navigate to="/patient-dashboard" replace />;
+      return <Navigate to="/app/patient-dashboard" replace />;
     } else if (user.role === 'doctor') {
-      return <Navigate to="/doctor-dashboard" replace />;
+      return <Navigate to="/app/doctor-dashboard" replace />;
     } else if (user.role === 'admin') {
-      return <Navigate to="/dashboard" replace />;
+      return <Navigate to="/app/dashboard" replace />;
     }
   }
 

@@ -8,7 +8,9 @@ import { MainLayout } from "@/components/layout/MainLayout";
 import { Dashboard } from "@/pages/Dashboard";
 import { PatientDashboard } from "@/pages/PatientDashboard";
 import { DoctorDashboard } from "@/pages/DoctorDashboard";
+import { LandingPage } from "@/pages/LandingPage";
 import { ChatWidget } from "@/components/chatbot/ChatWidget";
+import AuthPage from "./pages/AuthPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,7 +23,12 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<MainLayout />}>
+            {/* Public Routes */}
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/auth" element={<AuthPage />} />
+            
+            {/* Protected Routes */}
+            <Route path="/app" element={<MainLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="patient-dashboard" element={<PatientDashboard />} />
@@ -38,6 +45,7 @@ const App = () => (
               <Route path="notifications" element={<Dashboard />} />
               <Route path="settings" element={<Dashboard />} />
             </Route>
+            
             <Route path="*" element={<NotFound />} />
           </Routes>
           <ChatWidget />
